@@ -1,0 +1,30 @@
+.productos-container {
+  position: relative;
+  z-index: 10;
+  margin-left: 200px; /* separa el contenido del navbar */
+  background-color: rgb(55, 0, 255);
+  color: black;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.tabla-productos {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabla-productos th,
+.tabla-productos td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.tabla-productos tr:hover {
+  background-color: #f3f3f3;
+}

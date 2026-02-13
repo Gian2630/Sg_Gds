@@ -1,0 +1,25 @@
+.venta-detalles-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.venta-detalles-field {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+.venta-detalles-field label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.venta-detalles-field select {
+  padding: 8px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: white;
+}
