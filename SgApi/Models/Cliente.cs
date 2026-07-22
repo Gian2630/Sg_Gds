@@ -45,10 +45,10 @@ namespace SgApi.Models
         public decimal DescuentoPorc { get; set; } = 0m;
 
         // Saldo de cuenta corriente:
-        // positivo = te deben / negativo = a favor del cliente (si querés manejarlo así)
+        // positivo = te deben / negativo = a favor del cliente 
         public decimal Saldo { get; set; } = 0m;
 
-        // Límite de crédito (cuenta corriente). 0 = sin crédito (o podés usar null para "sin límite")
+        // Límite de crédito (cuenta corriente). 0 = sin crédito 
         public decimal CreditoLimite { get; set; } = 0m;
 
         public bool Activo { get; set; } = true;

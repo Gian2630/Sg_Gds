@@ -12,8 +12,8 @@ using SgApi.Config;
 namespace SgApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260214223359_Initial")]
-    partial class Initial
+    [Migration("20260220171716_UpdateProveedores")]
+    partial class UpdateProveedores
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,6 +76,10 @@ namespace SgApi.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
+                    b.Property<string>("Observaciones")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<string>("RazonSocial")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -101,11 +105,14 @@ namespace SgApi.Migrations
 
             modelBuilder.Entity("SgApi.Models.Producto", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Activo")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Familia")
                         .HasColumnType("nvarchar(max)");
@@ -113,23 +120,35 @@ namespace SgApi.Migrations
                     b.Property<DateTime>("FechaActualizacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdProveedor")
+                    b.Property<int?>("IdProveedor")
                         .HasColumnType("int");
 
-                    b.Property<string>("Tipo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("nombre")
+                    b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
-                    b.Property<decimal?>("preciocompra")
+                    b.Property<decimal?>("PrecioCompra")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("precioventa")
+                    b.Property<decimal>("PrecioVenta")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("id");
+                    b.Property<int?>("ProveedorId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Stock")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("StockMinimo")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Tipo")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProveedorId");
 
                     b.ToTable("Productos");
                 });
@@ -142,8 +161,26 @@ namespace SgApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Activo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Cuit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Direccion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FechaAlta")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("RazonSocial")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefono")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -232,6 +269,15 @@ namespace SgApi.Migrations
                     b.ToTable("VentaPagos");
                 });
 
+            modelBuilder.Entity("SgApi.Models.Producto", b =>
+                {
+                    b.HasOne("SgApi.Models.Proveedor", "Proveedor")
+                        .WithMany("Productos")
+                        .HasForeignKey("ProveedorId");
+
+                    b.Navigation("Proveedor");
+                });
+
             modelBuilder.Entity("SgApi.Models.Venta.Venta", b =>
                 {
                     b.HasOne("SgApi.Models.Cliente", "Cliente")
@@ -271,6 +317,11 @@ namespace SgApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Venta");
+                });
+
+            modelBuilder.Entity("SgApi.Models.Proveedor", b =>
+                {
+                    b.Navigation("Productos");
                 });
 
             modelBuilder.Entity("SgApi.Models.Venta.Venta", b =>

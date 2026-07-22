@@ -1,15 +1,18 @@
-﻿namespace SgApi.Models.Venta
+﻿using SgApi.Enums;
+
+namespace SgApi.Models.Venta
 {
     public class Venta
-    { //agregar cliente y cambiarlo x proveedor
+    { 
         public int Id { get; set; }
         public DateTime Fecha { get; set; } = DateTime.Now;
-        public string TipoComprobante { get; set; }
+        public TipoComprobante TipoComprobante { get; set; }
         public decimal Total { get; set; }
+        public bool Activo {get; set; } = true;
 
         public int IdCliente{ get; set; }
         public Cliente Cliente { get; set; }
-        public List<VentaDetalle> Detalles { get; set; }
-        public List<VentaPago> Pagos { get; set; }
+        public ICollection<VentaDetalle> Detalles { get; set; } = new List<VentaDetalle>();
+        public ICollection<VentaPago> Pagos { get; set; } = new List<VentaPago>();
     }
 }
